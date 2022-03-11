@@ -1,4 +1,4 @@
 theme: jekyll-theme-slate
 kramdown:
   math_engine: katex
-  input: markdown
+  input: GFM
