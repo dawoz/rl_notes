@@ -1,12 +1,3 @@
 theme: jekyll-theme-slate
 kramdown:
-  input: GFMKatex  # GFMKatex class from sp301415 is in _plugins/server-side-math.rb (name not important, no modifications made)
-  math_engine: sskatex
-  math_engine_opts:
-    katex_js: "js/katex/katex.min.js"
-    debug: true
-    verbose: true
-    js_run: Node
-    katex_opts:
-      throwOnError: false
-      macros: {}  # lots of macros here
+  math_engine: katex
