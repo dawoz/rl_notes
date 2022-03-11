@@ -75,7 +75,7 @@ Esempio $\gamma=0.9$, $H=100$:
 Esempio $\gamma=0.9$, $H=100$ e **probabilità di successo delle azioni pari a** $0.8$:
 
 - $V^*(4,3)=1$
-- $V^*(3,3)=0.8 \cdot 0.9 \cdot V^*(4,3)+0.1 \cdot 0.9V^*(3,3)+0.1 \cdot 0.9 \cdot V^*(3,2)$ ,... **ricorsione**
+- $V^\*(3,3)=0.8 \cdot 0.9 \cdot V^*(4,3)+0.1 \cdot 0.9V^\*(3,3)+0.1 \cdot 0.9 \cdot V^*(3,2)$ ,... **ricorsione**
 
 Computazione di $V_t^*(s)$ :
 
