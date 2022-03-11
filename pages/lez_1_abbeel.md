@@ -22,7 +22,7 @@
 
 - $S$ è l'insieme degli stati
 - $A$ è l'insieme di azioni
-- $P(s'| s,a )$ è la probabilità di passare allo stato $s'$ dallo stato $s$ tramite l'azione $a$
+- $P(s'\vert  s,a )$ è la probabilità di passare allo stato $s'$ dallo stato $s$ tramite l'azione $a$
 - $R(a,s,s')$ è la reward function che indica la ricompensa nel passare dallo stato $s$ allo stato $s'$ tramite l'azione $a$
 - $s_0$ è lo stato iniziale
 - $\gamma$ è il *discount factor*, costante in $[0,1]$. Più $\gamma$ è piccolo, meno le azioni future hanno influenza sulla scelta dell'azione all'istante corrente
@@ -31,7 +31,7 @@
 Goal del MDP:
 
 $$
-\max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right| \pi \right]
+\max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right\vert  \pi \right]
 $$
 
 Esempi di MDP:
@@ -49,7 +49,7 @@ Esempi di MDP:
 ## Value iteration
 
 $$
-V^\ast(s) = \max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right| \pi, s_0 =s\right]
+V^\ast(s) = \max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right\vert  \pi, s_0 =s\right]
 $$
 
 Esempio Gridworld. Nota: appena l'agente ottiene una ricompensa (positiva o negativa) il processo termina.
@@ -83,7 +83,7 @@ $$
 \left\{
 \begin{aligned}
 & V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
-& V_k^\ast(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
+& V_k^\ast(s)= \max_a \sum_{s'} P(s'\verts,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
 \end{aligned}
 \right.
 $$
@@ -101,12 +101,12 @@ Esempio con noise $0.2$ e discout $0.9$:
 **Teorema**: Value iteration converge al valore ottimo della funzione $V^\ast$ per il *discounted infinite horizon problem*, che soddisfa le equazioni di Bellman:
 
 $$
-V^\ast(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s')), \qquad \forall s \in S
+V^\ast(s)= \max_a \sum_{s'} P(s'\vert s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s')), \qquad \forall s \in S
 $$
 
 Alla convergenza (per ogni $s \in S$, $V^\ast(s)= \lim _{k \rightarrow \infty} V_k^\ast(s)$) si ha:
 
-- $\pi^\ast(s)= \arg \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s'))$ piano ottimale
+- $\pi^\ast(s)= \arg \max_a \sum_{s'} P(s'\vert  s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s'))$ piano ottimale
 - la *infinite horizon optimal policy* è un processo stazionario, quindi per ogni stato $s$, il valore $V_k^\ast(s)$ è uguale per ogni time-step $k$, quindi richiede di memorizzare un solo valore e non un valore per ogni time-step
 
 **Intuizione sulla convergenza di Value iteration**:
@@ -124,12 +124,12 @@ Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1
 
 **Intuizione sulla convergenza di Value iteration con contractions**:
 
-- $\| U(s)\| = \max_s |U(s)|$
-- $\gamma$-contraction: $\forall U_i,V_i. \ \| U_{i+1} - V_{i+1} \| \le \| U_i - V_i \|$
+- $\Vert  U(s)\Vert  = \max_s \vert U(s)\vert $
+- $\gamma$-contraction: $\forall U_i,V_i. \ \Vert  U_{i+1} - V_{i+1} \Vert  \le \Vert  U_i - V_i \Vert $
 - teorema: una contraction converge ad un valore unico
 - fatto: Value iteration è una $\gamma$-contraction in max-norm
 - corollario: Value iteration converge ad un valore unico
-- fatto: $\| V_{i+1} - V_i \| < \epsilon$ quindi $\| V_{i+1} - V^\ast \| < 2\epsilon/(1-\gamma)$, quindi quando l'update è piccolo è vicino alla convergenza
+- fatto: $\Vert  V_{i+1} - V_i \Vert  < \epsilon$ quindi $\Vert  V_{i+1} - V^\ast \Vert  < 2\epsilon/(1-\gamma)$, quindi quando l'update è piccolo è vicino alla convergenza
 
 ### Esempi
 
@@ -156,13 +156,13 @@ $\gamma = 0.1, noise=0 \quad \Longrightarrow \quad$ preferisci l'uscita lontana,
 **Definizione (Q-values)**: $Q^\ast(s,a)$ valore atteso di utilità partendo da $s$ e commettendo l'azione $s$, e poi agendo ottimalmente. Equazione di Bellman:
 
 $$
-Q^\ast(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q^\ast(s',a'))
+Q^\ast(s,a) = \sum_{s'} P(s'\vert s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q^\ast(s',a'))
 $$
 
 Q-value iteration:
 
 $$
-Q_k^\ast(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_{k-1}^\ast(s',a'))
+Q_k^\ast(s,a) = \sum_{s'} P(s'\vert s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_{k-1}^\ast(s',a'))
 $$
 
 Q-value converge nello stesso modo con cui converge Value iteration.
@@ -180,19 +180,19 @@ Esempio:
 Valutazione di una policy deterministica:
 
 $$
-V_k^\pi(s) = \sum_{s'} P (s'|s,\pi(s))\cdot (R(s,\pi(s),s')+\gamma V_{k-1}^\pi(s))
+V_k^\pi(s) = \sum_{s'} P (s'\vert s,\pi(s))\cdot (R(s,\pi(s),s')+\gamma V_{k-1}^\pi(s))
 $$
 
 Alla convergenza:
 
 $$
-V^\pi(s) = \sum_{s'} P (s'|s,\pi(s))\cdot (R(s,\pi(s),s')+\gamma V^\pi(s))
+V^\pi(s) = \sum_{s'} P (s'\vert s,\pi(s))\cdot (R(s,\pi(s),s')+\gamma V^\pi(s))
 $$
 
-Stochastic policy: $\pi(a|s)$ probabilità di commettere l'azione $a$ nello stato $s$. Valutazione:
+Stochastic policy: $\pi(a\vert s)$ probabilità di commettere l'azione $a$ nello stato $s$. Valutazione:
 
 $$
-V_k^\pi(s) = \sum_{s'} \sum_{a} \pi(a|s)\cdot P(s'|s,a) \cdot (R(s,a,s') + \gamma V_{k-1}^\pi(s'))
+V_k^\pi(s) = \sum_{s'} \sum_{a} \pi(a\vert s)\cdot P(s'\vert s,a) \cdot (R(s,a,s') + \gamma V_{k-1}^\pi(s'))
 $$
 
 Si può utilizzare la policy evaluation come misura di qualità di una policy, e cercare nello spazio delle policy la migliore.
@@ -214,7 +214,7 @@ Osservazioni:
 **Convergenza**:
 
 - in ogni step la policy migliora
-- ci sono un numero finito di policy $|A|^{|S|}$
+- ci sono un numero finito di policy $\vert A\vert ^{\vert S\vert }$
 
 **Ottimalità**:
 
@@ -254,7 +254,7 @@ $$
 Maximum entropy MDP:
 
 $$
-\max_\pi E\left[\sum_{t=0}^H r_t + \beta H(\pi(\cdot|s_t)) \right]
+\max_\pi E\left[\sum_{t=0}^H r_t + \beta H(\pi(\cdot\vert s_t)) \right]
 $$
 
 si introduce un termine che punta a massimizzare l'entropia. In particolare, più alto è $\beta$, più l'ottimizzazione è focalizzata sul massimizzare l'entropia, quindi che risulterebbe nella raccolta di meno reward. Alta entropia implica alta stocasticità.
@@ -264,8 +264,8 @@ si introduce un termine che punta a massimizzare l'entropia. In particolare, pi�
 Calcolo del duale lagrangiano:
 $$
 \begin{aligned}
-& \max_{\pi(a)} \left \{ E[r(a)] + \beta H(\pi(a)) \left| \ \sum_{a'} \pi(a')=1 \right. \right\}\\
-& \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left| \ \sum_{a'} \pi(a')=1 \right. \right\} \\
+& \max_{\pi(a)} \left \{ E[r(a)] + \beta H(\pi(a)) \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
+& \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\} \\
 & \max_{\pi(a)} \min_\lambda \mathcal{L}(\pi(a),\lambda)= E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1 \right)
 \end{aligned}
 $$
@@ -315,13 +315,13 @@ $$
 One-step update di max-ent value iteration:
 
 $$
-V_k(s)=\max_\pi E \left[ \sum_{t=H-k}^H r(s_t,a_t) + \beta H(\pi(a_t|s_t)) \right]
+V_k(s)=\max_\pi E \left[ \sum_{t=H-k}^H r(s_t,a_t) + \beta H(\pi(a_t\vert s_t)) \right]
 $$
 
 $$
 \begin{aligned}
-V_k(s)&=\max_\pi E \left[ r(s,a,s') + \beta H(\pi(a|s)) + V_{k-1}(s') \right]\\
-&=\max_\pi E \left[ Q_k(s,a) + \beta H(\pi(a|s)) \right]\\
+V_k(s)&=\max_\pi E \left[ r(s,a,s') + \beta H(\pi(a\vert s)) + V_{k-1}(s') \right]\\
+&=\max_\pi E \left[ Q_k(s,a) + \beta H(\pi(a\vert s)) \right]\\
 \end{aligned}
 $$
 
