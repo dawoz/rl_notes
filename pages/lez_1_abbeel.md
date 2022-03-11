@@ -263,13 +263,11 @@ si introduce un termine che punta a massimizzare l'entropia. In particolare, pi√
 
 Calcolo del duale lagrangiano:
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 & \max_{\pi(a)} \left \{ E[r(a)] + \beta H(\pi(a)) \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
 & \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\} \\
 & \max_{\pi(a)} \min_\lambda \mathcal{L}(\pi(a),\lambda)= E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1 \right)
-\end{aligned}
-$$
+\end{aligned}$$
 
 Calcolo del massimo di $\mathcal{L}$ rispetto a $\pi(a)$:
 
