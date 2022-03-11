@@ -135,19 +135,19 @@ Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1
 
 $\gamma = 0.1, noise=0 \quad \Longrightarrow \quad$ preferisci l'uscita vicina, rischiando la rupe
 
-![](img/es1.png "")
+![Esempio 1](img/es1.png "Esempio 1")
 
 $\gamma = 0.1, noise=0.5 \quad \Longrightarrow \quad$ preferisci l'uscita vicina, non rischiando la rupe
 
-![](img/es2.png "")
+![Esempio 2](img/es2.png "Esempio 2")
 
 $\gamma = 0.1, noise=0 \quad \Longrightarrow \quad$ preferisci l'uscita lontana, rischiando la rupe
 
-![](img/es3.png "")
+![Esempio 3](img/es3.png "Esempio 3")
 
 $\gamma = 0.1, noise=0 \quad \Longrightarrow \quad$ preferisci l'uscita lontana, non rischiando la rupe
 
-![](img/es4.png "")
+![Esempio 4](img/es4.png "Esempio 4")
 
 ---
 
@@ -169,7 +169,7 @@ Q-value converge nello stesso modo con cui converge Value iteration.
 
 Esempio:
 
-![](img/qvalues.png "")
+![Q-values](img/qvalues.png "Q-values")
 
 ---
 
@@ -199,7 +199,7 @@ Si può utilizzare la policy evaluation come misura di qualità di una policy, e
 
 **Algoritmo di policy iteration:**
 
-![](img/algo2.png "")
+![Policy evaluation](img/algo2.png "Policy evaluation")
 
 Osservazioni:
 
@@ -218,7 +218,7 @@ Osservazioni:
 
 **Ottimalità**:
 
-- quando si ha convergenza si ha $\pi_{k+1}(s)=\pi_k(s)$ per ogni $s$, quindi vale la condizione 
+- quando si ha convergenza si ha $\pi_{k+1}(s)=\pi_k(s)$ per ogni $s$, quindi vale la condizione
 
 $$
 \pi(s) = \arg \max_a  \sum_{s'} P(s,a,s') \cdot (R(s,a,s') + \gamma V^\pi(s')) \qquad \forall s
@@ -262,6 +262,7 @@ si introduce un termine che punta a massimizzare l'entropia. In particolare, pi�
 **Ottimizzazione del problema con maximum entropy formulation:**
 
 Calcolo del duale lagrangiano:
+
 $$
 \begin{aligned}
 & \max_{\pi(a)} \left \{ E[r(a)] + \beta H(\pi(a)) \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
@@ -271,6 +272,7 @@ $$
 $$
 
 Calcolo del massimo di $\mathcal{L}$ rispetto a $\pi(a)$:
+
 $$
 \begin{aligned}
 & \frac{\partial}{\partial \pi(a)}\mathcal{L}(\pi(a),\lambda)=0\\
@@ -282,12 +284,14 @@ $$
 $$
 
 Calcolo del minimo di $\mathcal{L}$ rispetto a $\lambda$:
+
 $$
 \begin{aligned}
 & \frac{\partial}{\partial \lambda} \mathcal{L}(\pi(a), \lambda) = 0\\
 & \sum_a \pi(a) - 1= 0\\
 \end{aligned}
 $$
+
 si ottiene che qualsiasi $\lambda > 0$ permette di ottenere il minimo. Ponendo $\lambda = \beta$ e normalizzando:
 
 $$
