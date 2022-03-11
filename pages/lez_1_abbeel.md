@@ -49,7 +49,7 @@ Esempi di MDP:
 ## Value iteration
 
 $$
-V^*(s) = \max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right| \pi, s_0 =s\right]
+V^\ast(s) = \max_\pi E \left[ \left. \sum_{t=0}^H \gamma^tR(S_t, A_t, S_{t+1}) \right| \pi, s_0 =s\right]
 $$
 
 Esempio Gridworld. Nota: appena l'agente ottiene una ricompensa (positiva o negativa) il processo termina.
@@ -58,32 +58,32 @@ Esempio Gridworld. Nota: appena l'agente ottiene una ricompensa (positiva o nega
 
 Esempio $\gamma=1$, $H=100$:
 
-- $V^*(4,3)=1$
-- $V^*(3,3)=1$
-- $V^*(2,3)=1$
-- $V^*(1,1)=1$
-- $V^*(4,2)=-1$
+- $V^\ast(4,3)=1$
+- $V^\ast(3,3)=1$
+- $V^\ast(2,3)=1$
+- $V^\ast(1,1)=1$
+- $V^\ast(4,2)=-1$
 
 Esempio $\gamma=0.9$, $H=100$:
 
-- $V^*(4,3)=1$
-- $V^*(3,3)=0.9$
-- $V^*(2,3)=0.9^2=0.81$
-- $V^*(1,1)=0.9^5=0.59$
-- $V^*(4,2)=-1$
+- $V^\ast(4,3)=1$
+- $V^\ast(3,3)=0.9$
+- $V^\ast(2,3)=0.9^2=0.81$
+- $V^\ast(1,1)=0.9^5=0.59$
+- $V^\ast(4,2)=-1$
 
 Esempio $\gamma=0.9$, $H=100$ e **probabilità di successo delle azioni pari a** $0.8$:
 
-- $V^*(4,3)=1$
-- $V^*(3,3)=0.8 \cdot 0.9 \cdot V^*(4,3)+0.1 \cdot 0.9V^*(3,3)+0.1 \cdot 0.9 \cdot V^*(3,2)$ ,... **ricorsione**
+- $V^\ast(4,3)=1$
+- $V^\ast(3,3)=0.8 \cdot 0.9 \cdot V^\ast(4,3)+0.1 \cdot 0.9V^\ast(3,3)+0.1 \cdot 0.9 \cdot V^\ast(3,2)$ ,... **ricorsione**
 
-Computazione di $V_t^*(s)$ :
+Computazione di $V_t^\ast(s)$ :
 
 $$
 \left\{
 \begin{aligned}
-& V_0^*(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
-& V_k^*(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^*(s')) \qquad k > 0 \phantom{\sum^k}
+& V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
+& V_k^\ast(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
 \end{aligned}
 \right.
 $$
@@ -98,29 +98,29 @@ Esempio con noise $0.2$ e discout $0.9$:
 
 ![Esempio](img/values.png "Esempio")
 
-**Teorema**: Value iteration converge al valore ottimo della funzione $V^*$ per il *discounted infinite horizon problem*, che soddisfa le equazioni di Bellman:
+**Teorema**: Value iteration converge al valore ottimo della funzione $V^\ast$ per il *discounted infinite horizon problem*, che soddisfa le equazioni di Bellman:
 
 $$
-V^*(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^*(s')), \qquad \forall s \in S
+V^\ast(s)= \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s')), \qquad \forall s \in S
 $$
 
-Alla convergenza (per ogni $s \in S$, $V^*(s)= \lim _{k \rightarrow \infty} V_k^*(s)$) si ha:
+Alla convergenza (per ogni $s \in S$, $V^\ast(s)= \lim _{k \rightarrow \infty} V_k^\ast(s)$) si ha:
 
-- $\pi^*(s)= \arg \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^*(s'))$ piano ottimale
-- la *infinite horizon optimal policy* è un processo stazionario, quindi per ogni stato $s$, il valore $V_k^*(s)$ è uguale per ogni time-step $k$, quindi richiede di memorizzare un solo valore e non un valore per ogni time-step
+- $\pi^\ast(s)= \arg \max_a \sum_{s'} P(s'|s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s'))$ piano ottimale
+- la *infinite horizon optimal policy* è un processo stazionario, quindi per ogni stato $s$, il valore $V_k^\ast(s)$ è uguale per ogni time-step $k$, quindi richiede di memorizzare un solo valore e non un valore per ogni time-step
 
 **Intuizione sulla convergenza di Value iteration**:
 
 - assunzione semplificatrice: i reward sono tutti maggiori di $0$. Si può ragionare su reward negativi considerando il valore assuluto di $R$
-- $V^*(s)$ somma attesa delle ricompense dallo stato $s$ dopo infiniti step
-- $V_H^*(s)$ somma attesa delle ricompense dallo stato $s$ dopo $H$ step
+- $V^\ast(s)$ somma attesa delle ricompense dallo stato $s$ dopo infiniti step
+- $V_H^\ast(s)$ somma attesa delle ricompense dallo stato $s$ dopo $H$ step
 - reward addizionali dopo $H$:
 
 $$
-\sum_{k=1}^\infty \gamma^{H+k} R(s_{H+k}) \le R_{max} \cdot \sum_{k=1}^\infty \gamma^{H+k}  \stackrel{(*)}{=} \frac{\gamma^{H+1}}{1-\gamma}R_{max} \qquad (*) \text{ serie geometrica}
+\sum_{k=1}^\infty \gamma^{H+k} R(s_{H+k}) \le R_{max} \cdot \sum_{k=1}^\infty \gamma^{H+k}  \stackrel{(\ast)}{=} \frac{\gamma^{H+1}}{1-\gamma}R_{max} \qquad (\ast) \text{ serie geometrica}
 $$
 
-Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1-\gamma}R_{max} = \frac{R_{max}}{1-\gamma}$, quindi $V_H^*$ converge a $V^*$
+Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1-\gamma}R_{max} = \frac{R_{max}}{1-\gamma}$, quindi $V_H^\ast$ converge a $V^\ast$
 
 **Intuizione sulla convergenza di Value iteration con contractions**:
 
@@ -129,7 +129,7 @@ Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1
 - teorema: una contraction converge ad un valore unico
 - fatto: Value iteration è una $\gamma$-contraction in max-norm
 - corollario: Value iteration converge ad un valore unico
-- fatto: $\| V_{i+1} - V_i \| < \epsilon$ quindi $\| V_{i+1} - V^* \| < 2\epsilon/(1-\gamma)$, quindi quando l'update è piccolo è vicino alla convergenza
+- fatto: $\| V_{i+1} - V_i \| < \epsilon$ quindi $\| V_{i+1} - V^\ast \| < 2\epsilon/(1-\gamma)$, quindi quando l'update è piccolo è vicino alla convergenza
 
 ### Esempi
 
@@ -153,16 +153,16 @@ $\gamma = 0.1, noise=0 \quad \Longrightarrow \quad$ preferisci l'uscita lontana,
 
 ## Q-values
 
-**Definizione (Q-values)**: $Q^*(s,a)$ valore atteso di utilità partendo da $s$ e commettendo l'azione $s$, e poi agendo ottimalmente. Equazione di Bellman:
+**Definizione (Q-values)**: $Q^\ast(s,a)$ valore atteso di utilità partendo da $s$ e commettendo l'azione $s$, e poi agendo ottimalmente. Equazione di Bellman:
 
 $$
-Q^*(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q^*(s',a'))
+Q^\ast(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q^\ast(s',a'))
 $$
 
 Q-value iteration:
 
 $$
-Q_k^*(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_{k-1}^*(s',a'))
+Q_k^\ast(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_{k-1}^\ast(s',a'))
 $$
 
 Q-value converge nello stesso modo con cui converge Value iteration.
