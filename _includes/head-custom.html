@@ -1,20 +1,16 @@
-<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
-<!-- <script>
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.innerHTML = document.body.innerHTML.replace('/(?<left>(?<!\$)(?:\$))(?<middle>[^\$]+)(?<right>(?:\$)(?!\$))/g', '\\(${middle}\\)');
+    document.body.innerHTML = document.body.innerHTML.replace('/(?<left>(?<!\$)(?:\$))(?<middle>[^\$]+)(?<right>(?:\$)(?!\$))/g', '$$$$${middle}$$$$');
 });
-</script> -->
-<!-- <script defer>
+</script>
+<script defer>
 window.MathJax = {
   tex: {
-  inlineMath: [['\\(', '\\)']],
+  inlineMath: [['$','$'], ['\\(', '\\)']],
   processEscapes: true
   }
 };
-</script> -->
-<script src="https://latex.codecogs.com/latexit.js"></script>
-<script>
-LatexIT.add('p',true);
-LatexIT.add('li',true);
 </script>
+

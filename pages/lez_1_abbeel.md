@@ -22,7 +22,7 @@
 
 - $S$ è l'insieme degli stati
 - $A$ è l'insieme di azioni
-- \( P(s'| s,a \) è la probabilità di passare allo stato $s'$ dallo stato $s$ tramite l'azione $a$
+- $P(s'| s,a )$ è la probabilità di passare allo stato $s'$ dallo stato $s$ tramite l'azione $a$
 - $R(a,s,s')$ è la reward function che indica la ricompensa nel passare dallo stato $s$ allo stato $s'$ tramite l'azione $a$
 - $s_0$ è lo stato iniziale
 - $\gamma$ è il *discount factor*, costante in $[0,1]$. Più $\gamma$ è piccolo, meno le azioni future hanno influenza sulla scelta dell'azione all'istante corrente
