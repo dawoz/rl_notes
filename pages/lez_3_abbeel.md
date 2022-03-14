@@ -120,7 +120,6 @@ Osservazione: nella media, il termine dato da $b$ è $0$. In realtà, con campio
 
 Decomposizione temporale del reward:
 
-[//]: {::nomarkdown}
 $$
 \begin{aligned}
 \hat{g} &= \frac{1}{m} \sum_{i=0}^m \nabla_\theta \log P(\tau^{(i)}; \theta) R(\tau^{(i)}-b)\\
@@ -128,7 +127,6 @@ $$
 &= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)})\right) \left( \underbrace{\sum_{k=0}^{t-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni passate}} +  \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni future}} - b\right)\\
 \end{aligned}
 $$
-[//]: {:/nomarkdown}
 
 Osservazioni:
 
