@@ -16,10 +16,18 @@
 <!-- MathJax -->
 <script>
   MathJax = {
+    startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      var elems = document.getElementsByClassName('math')
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].innerHTML = elems[i].innerHTML.replace(/<em>/g,"_").replace(/<\/em>/g,"_")
+      }
+    }
+  },
     options: {
       includeHtmlTags: {
-        br: '\\\\',
-        em: '_'
+        br: '\\\\'
       },
     },
     tex: {
