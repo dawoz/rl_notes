@@ -77,7 +77,7 @@ KL(P(\tau ; \theta) \| P(\tau ; \theta + \delta \theta)) &= \sum_\tau P(\tau; \t
 &= \sum_\tau P(\tau; \theta) \log \frac{P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t|s_t) P(s_{t+1}|s_t,u_t)}{P(s_0) \prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t) P(s_{t+1}|s_t,u_t)} & \text{(def. $P(\tau ; \theta)$)}\\
 &= \sum_\tau P(\tau; \theta) \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} & \text{(sempl. dynamics)}\\
 &= \sum_\tau \underbrace{P(\tau; \theta)}_{\substack{\text{dynamics, ma si} \\ \text{può fare sampling}}} \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} \\
-& \approx \frac{1}{M} \sum_{(s,u) \text{ in $M$ roll-outs}} \log \frac{\pi_\theta(u|s)}{\pi_{\theta + \delta \theta}(u|s)} \\
+& \approx \frac{1}{M} \sum_{(s,u) \text{ in M roll-outs}} \log \frac{\pi_\theta(u|s)}{\pi_{\theta + \delta \theta}(u|s)} \\
 \end{aligned}
 $$
 
