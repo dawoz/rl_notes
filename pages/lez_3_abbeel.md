@@ -3,11 +3,11 @@
 Metodi alternativi a DQN per risolvere grandi MDP:
 
 - DQN è data-efficient, ma magari non stabile come altri metodi
-- ogni metodo ha i suoi use-cases 
+- ogni metodo ha i suoi use-cases
 
 ## Policy Gradient derivation
 
-![](img/rl_policy_iteration.png "")
+![Policy iteration](img/rl_policy_iteration.png "Policy iteration")
 
 - in Policy Gradient Methods l'agente è una rete neurale
 - sceglie l'azione in base a stati e reward, e i pesi $\theta$
@@ -22,7 +22,7 @@ Perché policy optimization:
 - i V-values non prescrivono un'azione: serve un modello dinamico, quindi almeno calcolare 1 Bellman backup
 - i Q-values richiedono di calcolare in maniera effiiciente $\arg \max_u Q_\theta(s,u)$, il che costituisce una sfida per spazi di azioni grandi o continui
 
-**Likelihood ration policy gradient**: $\tau$ denota la sequenza stato-azione $s_0, u_0, ..., s_H, u_H$. Con un abuso di notazione, si indica $R(\tau)=\sum_{t=0}^HR(s,u)$. Il reward atteso si può dunque esprimere come 
+**Likelihood ration policy gradient**: $\tau$ denota la sequenza stato-azione $s_0, u_0, ..., s_H, u_H$. Con un abuso di notazione, si indica $R(\tau)=\sum_{t=0}^HR(s,u)$. Il reward atteso si può dunque esprimere come
 
 $$
 U(\theta)=E\left[ \sum_{t=0}^H R(s,u) ; \pi_\theta \right]=E\left[ R(\tau) ; \pi_\theta \right] = \sum_\tau P(\tau; \theta)R(\tau)
@@ -39,8 +39,8 @@ Ottimizzazione con gradiente:
 $$
 \begin{aligned}
 \nabla_\theta U(\theta) &= \nabla_\theta \sum_\tau P(\tau; \theta) R(\tau)\\
-&=  \sum_\tau \nabla_\theta P(\tau; \theta) R(\tau) & \text{($R$ non dipende da $\theta$)}\\
-&=  \sum_\tau \frac{P(\tau; \theta)}{P(\tau; \theta)} \nabla_\theta P(\tau; \theta) R(\tau)  & \text{(obiettivo: somma pesata da $P$)}\\
+&=  \sum_\tau \nabla_\theta P(\tau; \theta) R(\tau) & (R\text{ non dipende da }\theta)\\
+&=  \sum_\tau \frac{P(\tau; \theta)}{P(\tau; \theta)} \nabla_\theta P(\tau; \theta) R(\tau)  & \text{(obiettivo: somma pesata da }P)\\
 &=  \sum_\tau P(\tau; \theta) \underbrace{\left(\frac{1}{P(\tau; \theta)}\nabla_\theta P(\tau; \theta) \right)}_{\nabla_\theta \log P(\tau; \theta)} R(\tau)\\
 &=  \sum_\tau P(\tau; \theta) \nabla_\theta \log P(\tau; \theta) R(\tau) & \text{(chain rule)}\\
 \end{aligned}
@@ -88,7 +88,7 @@ Osservazioni sulla formulazione corrente:
 
 - già usabile
 - unbiased ma molto rumorosa (alta varianza). Fix per uso reale:
-  - si introdurrà una baseline, si userà più struttura temporale e si introddurranno i concetti di *trust region* e *natural gradient*
+  - si introdurrà una baseline, si userà più struttura temporale e si introddurranno i concetti di _trust region_ e _natural gradient_
 
 Altra idea:
 
@@ -107,7 +107,7 @@ Calcolo della media del termine con $b$:
 
 $$
 \begin{aligned}
-E \left[\nabla_\theta \log P(\tau^{(i)}; \theta) \cdot b \right] &= \sum_\tau P(\tau; \theta) \nabla_\theta \log P(\tau^{(i)}; \theta) b\\ 
+E \left[\nabla_\theta \log P(\tau^{(i)}; \theta) \cdot b \right] &= \sum_\tau P(\tau; \theta) \nabla_\theta \log P(\tau^{(i)}; \theta) b\\
 &= \sum_\tau P(\tau; \theta) \frac{\nabla_\theta P(\tau^{(i)}; \theta)}{P(\tau^{(i)}; \theta)} b & \text{(chain rule)}\\
 &= \sum_\tau \nabla_\theta P(\tau; \theta) b\\
 &= \nabla_\theta \left ( \sum_\tau  P(\tau; \theta) b \right)\\
@@ -118,8 +118,9 @@ $$
 
 Osservazione: nella media, il termine dato da $b$ è $0$. In realtà, con campioni finiti, si ha un effetto di riduzione della varianza.
 
-Decomposizione teporale del reward:
+Decomposizione temporale del reward:
 
+[//]: {::nomarkdown}
 $$
 \begin{aligned}
 \hat{g} &= \frac{1}{m} \sum_{i=0}^m \nabla_\theta \log P(\tau^{(i)}; \theta) R(\tau^{(i)}-b)\\
@@ -127,6 +128,7 @@ $$
 &= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)})\right) \left( \underbrace{\sum_{k=0}^{t-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni passate}} +  \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni future}} - b\right)\\
 \end{aligned}
 $$
+[//]: {:/normarkdown}
 
 Osservazioni:
 
@@ -205,7 +207,7 @@ Si esegue anche regolarizzazione per evitare update troppo grandi. Si può anche
 
 ## Vanilla Policy Gradient
 
-![](img/policy_gradient.png)
+![Policy gradient](img/policy_gradient.png "Policy gradient")
 
 Advantage estimate $\hat{A}_t$: differenza reward futuro e baseline.
 
@@ -245,7 +247,7 @@ Esempi in letteratura:
 
 ## Policy gradient con A3C o GAE
 
-![](img/policy_gradient_opt.png "")
+![A3C/GAE](img/policy_gradient_opt.png "A3C/GAE")
 
 Ci sono tante variazioni dell'algoritmo:
 
