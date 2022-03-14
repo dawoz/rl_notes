@@ -265,8 +265,8 @@ Calcolo del duale lagrangiano:
 
 $$
 \begin{aligned}
-& \max_{\pi(a)} \left\{ E[r(a)] + \beta H(\pi(a)) \left\vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
-& \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left\vert \sum_{a'} \pi(a')=1 \right. \right\} \\
+& \max_{\pi(a)} \left\{ E[r(a)] + \beta H(\pi(a)) \left \vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
+& \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left \vert \sum_{a'} \pi(a')=1 \right. \right\} \\
 & \max_{\pi(a)} \min_\lambda \mathcal{L}(\pi(a),\lambda)= E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1 \right)
 \end{aligned}
 $$
