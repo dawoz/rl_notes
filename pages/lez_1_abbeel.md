@@ -27,7 +27,7 @@
 - $P(s'\vert  s,a )$ è la probabilità di passare allo stato $s'$ dallo stato $s$ tramite l'azione $a$
 - $R(a,s,s')$ è la reward function che indica la ricompensa nel passare dallo stato $s$ allo stato $s'$ tramite l'azione $a$
 - $s_0$ è lo stato iniziale
-- $\gamma$ è il *discount factor*, costante in $[0,1]$. Più $\gamma$ è piccolo, meno le azioni future hanno influenza sulla scelta dell'azione all'istante corrente
+- $\gamma$ è il **discount factor**, costante in $[0,1]$. Più $\gamma$ è piccolo, meno le azioni future hanno influenza sulla scelta dell'azione all'istante corrente
 - $H$ è l'orizzonte, cioè il time-step nel futuro oltre il quale non si prosegue la computazione
 
 Goal del MDP:
@@ -109,7 +109,7 @@ $$
 Alla convergenza (per ogni $s \in S$, $V^\ast(s)= \lim _{k \rightarrow \infty} V_k^\ast(s)$) si ha:
 
 - $\pi^\ast(s)= \arg \max_a \sum_{s'} P(s'\vert  s,a)\cdot  ( R(s,a,s') + \gamma V^\ast(s'))$ piano ottimale
-- la *infinite horizon optimal policy* è un processo stazionario, quindi per ogni stato $s$, il valore $V_k^\ast(s)$ è uguale per ogni time-step $k$, quindi richiede di memorizzare un solo valore e non un valore per ogni time-step
+- la **infinite horizon optimal policy** è un processo stazionario, quindi per ogni stato $s$, il valore $V_k^\ast(s)$ è uguale per ogni time-step $k$, quindi richiede di memorizzare un solo valore e non un valore per ogni time-step
 
 **Intuizione sulla convergenza di Value iteration**:
 
@@ -177,7 +177,7 @@ Esempio:
 
 ## Policy iteration
 
-*Policy evaluation*: si utilizza la stessa equazione di Value iteration, ma non scegliendo l'azione che massimizza il valore, bensì un'azione di un particolare piano $\pi$.
+**Policy evaluation**: si utilizza la stessa equazione di Value iteration, ma non scegliendo l'azione che massimizza il valore, bensì un'azione di un particolare piano $\pi$.
 
 Valutazione di una policy deterministica:
 
