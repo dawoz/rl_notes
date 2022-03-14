@@ -1,6 +1,6 @@
 theme: jekyll-theme-slate
-title: [Appunti di Reinforcement Learning]
-#description: []
+title: Appunti di Reinforcement Learning
+#description: 
 kramdown:
   # math_engine: katex
   input: markdown
