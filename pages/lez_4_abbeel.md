@@ -57,7 +57,7 @@ Osservazioni:
 - la loss function valuta la nuova policy senza collezionare altri dati
 - stima $A^{\pi_{old}}$ dipende dalla old policy
 - il metodo è buono quando la nuova policy è vicino alla vecchia policy
-- $KL(\pi \| \pi_{old})$ distanza delle policy sotto forma di *Kullback-Leibler divergence* (calcolo di quanto due distribuzioni di probabilità differiscono tra di loro): si può usare il metodo del gradiente coniugato per calcolarla, siccome è di ordine superiore
+- $KL(\pi \| \pi_{old})$ distanza delle policy sotto forma di **Kullback-Leibler divergence** (calcolo di quanto due distribuzioni di probabilità differiscono tra di loro): si può usare il metodo del gradiente coniugato per calcolarla, siccome è di ordine superiore
 - regione KL: ancora da definire
 
 Algoritmo TRPO:
@@ -95,7 +95,7 @@ Idea PPO:
 
 - inserire il vincolo di TRPO nella funzione obiettivo: per una giusta scelta di $\beta$ si ha un problema equivalente
 - abbiamo un problema di ottimizzazione unconstrained: possiamo usare SGD, Adam...
-- conviene fare *dual decent* con $\beta$, in modo da aumentarlo se il vincolo non è rispettato
+- conviene fare **dual descent** con $\beta$, in modo da aumentarlo se il vincolo non è rispettato
 
 $$
 \begin{aligned}
@@ -134,7 +134,7 @@ Osservazioni:
 
 - approccio pessimistico: se il rapporto va oltre i bounds, assumiamo che non abbia effetto sull'ottimizzazione
 - se un termine dà influenza fino ad un bound, allora non può influenzare ulteriormente
-- quindi si ha un altro modo per definire le *trust regions*
+- quindi si ha un altro modo per definire le **trust regions**
 
 Vantaggi:
 
