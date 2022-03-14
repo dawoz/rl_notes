@@ -83,7 +83,7 @@ $$
 \left\{
 \begin{aligned}
 & V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
-& V_k^\ast(s)= \max_a \sum_{s'} P(s'\verts,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
+& V_k^\ast(s)= \max_a \sum_{s'} P(s'\vert s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
 \end{aligned}
 \right.
 $$
@@ -124,8 +124,8 @@ Siccome $\gamma < 1$ si ha che $\lim_{H \rightarrow \infty}\frac{\gamma^{H+1}}{1
 
 **Intuizione sulla convergenza di Value iteration con contractions**:
 
-- $\Vert  U(s)\Vert  = \max_s \vert U(s)\vert $
-- $\gamma$-contraction: $\forall U_i,V_i. \ \Vert  U_{i+1} - V_{i+1} \Vert  \le \Vert  U_i - V_i \Vert $
+- $\Vert U(s)\Vert = \max_s \vert U(s) \vert$
+- $\gamma$-contraction: $\forall U_i,V_i. \ \Vert  U_{i+1} - V_{i+1} \Vert  \le \Vert  U_i - V_i \Vert$
 - teorema: una contraction converge ad un valore unico
 - fatto: Value iteration è una $\gamma$-contraction in max-norm
 - corollario: Value iteration converge ad un valore unico
