@@ -7,7 +7,7 @@ Limitazioni dei metodi esatti:
 
 ## Q-Learning
 
-$Q^*(s,a)$: valore di utilità atteso per l'azione $a$ nello stato $s$ e agendo ottimamente dallo stato seguente in avanti.
+$Q^\ast(s,a)$: valore di utilità atteso per l'azione $a$ nello stato $s$ e agendo ottimamente dallo stato seguente in avanti.
 
 Assume:
 
@@ -15,18 +15,18 @@ Assume:
 - loop su azioni e stati
 
 $$
-Q_{k+1}^*(s,a) = \sum_{s'} P(s'|s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_k^*(s',a'))
+Q_{k+1}^\ast(s,a) = \sum_{s'} P(s'\vert s,a)\cdot(R(s,a,s') + \gamma \max_{a'} Q_k^\ast(s',a'))
 $$
 
 Riscrittura tramite expected value, quindi usare l'esperienza, e non un transition model:
 
 $$
-Q_{k+1} = E_{s' \sim P(s'|s,1)} \left[ R(s,a,s') + \gamma \max_{a'} Q_k(s',a')) \right]
+Q_{k+1} = E_{s' \sim P(s'\vert s,1)} \left[ R(s,a,s') + \gamma \max_{a'} Q_k(s',a')) \right]
 $$
 
 Da ciò, l'idea dell'algoritmo:
 
-- per la coppia $(s,a)$ considera uno stato sample $s' \sim P(s'|s,a)$
+- per la coppia $(s,a)$ considera uno stato sample $s' \sim P(s'\vert s,a)$
 - considera $Q_k(s,a)$ stima precedente
 - calcola la nuova stima come
 
@@ -42,7 +42,7 @@ $$
 
 Algoritmo di Q-Learning:
 
-![](img/qlearning.png "")
+!["Q-Learning"](img/qlearning.png "Q-Learning")
 
 **Come fare sampling sulle azioni?**
 
@@ -61,7 +61,6 @@ Osservazioni Q-Learning:
 - il learning rate deve essere impostato in modo che valgano le seguenti condizioni:
 
 $$
-
 \begin{aligned}
 &\sum_{t=0}^\infty \alpha_t(s,a)=\infty \qquad (\text{abbastanza apprendimento }\forall t)\\
 & \sum_{t=0}^\infty \alpha_t^2(s,a)<\infty \qquad (\text{varianza limitata})
@@ -88,7 +87,6 @@ $$
 
 ## Deep Q Networks (DQN)
 
-
 $$
 \begin{aligned}
 & target(s')=R(s,a,s') + \gamma \max_{a'} Q_{\theta_k}(s',a')\\
@@ -100,7 +98,7 @@ per evitare overfitting, si può fare training in batches.
 
 Algoritmo:
 
-![](img/dqn.png "")
+![DQN](img/dqn.png "DQN")
 
 Osservazioni:
 
@@ -117,15 +115,15 @@ Dettagli:
 - si usa la Huber Loss, e non una squared loss, in modo da creare un averaging, più che una forte ottimizzazione. La funzione di Huber è una parabola vicino al vertice, e una retta nelle regioni più esterne.
 
 $$
-L_\delta(a)= \left\{
+L_\delta(a)= \left\lbrace
 \begin{array}{ll}
-\frac{1}{2}a^2 & \qquad |a| \le \delta\\
-\delta\left(|a|-\frac{1}{2}\delta\right) & \qquad \text{otherwise}
+\frac{1}{2}a^2 & \qquad \vert a\vert  \le \delta\\
+\delta\left(\vert a\vert -\frac{1}{2}\delta\right) & \qquad \text{otherwise}
 \end{array}
     \right.
 $$
 
-![](img/huber.png "")
+![Huber Loss](img/huber.png "Huber Loss")
 
 - si usa l'ottimizzatore RMSProp (Hinton) più che SGD; RMSProp fa un rescaling del gradiente. Funziona meglio in questo caso
 - annealing di $\epsilon$: si parte da $\epsilon=1$ per arrivare a $\epsilon=0.1$ dopo il primo milione di frames
@@ -144,7 +142,7 @@ DQN sui giochi Atari:
 - si può quindi spezzare la loss utilizzando le due funzioni separate:
 
 $$
-L_i(\theta_i) = E_{s,a,s',r,D} \left[ 
+L_i(\theta_i) = E_{s,a,s',r,D} \left[
     r + \gamma Q(s',\arg \max_{a'}Q(s',a',\theta);\theta_i^-) - Q(s,a;\theta_i)  
      \right]^2
 $$
@@ -155,9 +153,9 @@ $$
 - si può scelgere di fare sampling di transizioni in proporziona al Bellman error
   
 $$
-\left|
+\left\vert
     r + \gamma \max Q(s',a';\theta^-) - Q(s,a;\theta)  
-     \right|
+     \right\vert
 $$
 
 - quindi si vanno a scegliere di più le transizioni in cui l'esperienza non concorda con il target calcolato: il risultato è un apprendimento molto più veloce
