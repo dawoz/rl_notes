@@ -16,6 +16,11 @@
 <!-- MathJax -->
 <script>
   MathJax = {
+    options: {
+      includeHtmlTags: {
+        br: '\\\\'
+      },
+    },
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']]
