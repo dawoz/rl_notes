@@ -22,7 +22,7 @@ Perché non usarlo sempre?
 - può essere instabile
 - spesso non ottiene le stesse performance asintotiche di altri metodi model-free
 
-## Robust Model-Based RL: Model_Ensemble TRPO (ME-TRPO)
+## Robust Model-Based RL: Model-Ensemble TRPO (ME-TRPO)
 
 Standard overfitting (supervised): buone performance in training ma cattive in testing.
 
