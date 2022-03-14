@@ -1,4 +1,6 @@
-# Lezione 1 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
+
+# Lecture 1 - MDPs, Exact Solution Methods, Max-ent RL
 
 ## Motivation
 

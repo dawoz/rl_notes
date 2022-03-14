@@ -1,10 +1,12 @@
-# Lezione 6 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
+
+# Lecture 6 - Model-based RL
 
 Fin'ora, si sono trattati model-free RL methods. Si può fare in modo di creare una rappresentazione interna dell'ambiente dai dati che l'agente colleziona.
 
 ## Model-based RL
 
-![](img/vanilla_mbrl.png)
+![MB Reinforcement Learning](img/vanilla_mbrl.png "MB Reinforcement Learning")
 
 Osservazioni:
 
@@ -35,15 +37,15 @@ Model-bias:
 
 Model ensemble: più modelli per avere performance più solide.
 
-![](img/me_trpo.png)
+![ME-TRPO](img/me_trpo.png "ME-TRPO")
 
-Osservazioni: 
+Osservazioni:
 
 - si collezionano esempi fittizi dai modelli e si fa update della policy
 - si stimano le performance su più membri dell'ensemble
 - se ci sono abbastanza dati per supportare un modello, tanti membri dell'ensemble concorderanno; altrimenti, ci sarà più confusione, quindi probabilmente si è fuori dalla trust region
 
-Risultati: 
+Risultati:
 
 - ME-TRPO ha buone learning curves
 - meglio di BPTT
@@ -59,7 +61,7 @@ Soluzioni:
   - basato su ensemble che impara come funziona il modo reale
   - si impara una **adaptive policy** che può velocemente adattarsi ad uno dei modelli appresi
 
-![](img/mb_mpo.png)
+![MB-MPO](img/mb_mpo.png "MB-MPO")
 
 Osservazioni chiave:
 

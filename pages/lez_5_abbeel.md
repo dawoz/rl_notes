@@ -1,10 +1,12 @@
-# Lezione 5 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
+
+# Lecture 5 - DDPG and SAC
 
 Downside degli off-policy methods: non sampe-efficient: se collezionare dati è costoso, non sono metodi ideali
 
 ## Deep Deterministic Policy Gradient (DDPG)
 
-![](img/ddpg.png "")
+![DDPG](img/ddpg.png "DDPG")
 
 Osservazioni:
 
@@ -38,7 +40,7 @@ $$
 Q(s,a) = r(s,a) + E_{s' \sim p_s, a' \sim \pi}[Q(s',a') \underbrace{- \log \pi(a'|s')}_{\text{entropy term}}]
 $$
 
-2) **soft policy improvement**: aggiorna la policy tramite proiezione di informazione. Si avrà $Q^{\pi_{new}} \ge Q^{\pi_{old}} \ \equiv$ passo di SGD per minimizzare la KL-divergence 
+2) **soft policy improvement**: aggiorna la policy tramite proiezione di informazione. Si avrà $Q^{\pi_{new}} \ge Q^{\pi_{old}} \ \equiv$ passo di SGD per minimizzare la KL-divergence
 
 $$
 \pi_{new} = \arg \min_{\pi'} D_{KL} \left( \pi'(\cdot | s) \left\| \frac{1}{Z} \exp Q^{\pi_{old}} (s, \cdot )\right. \right)
@@ -58,7 +60,7 @@ $$
 \begin{aligned}
 J_V(\psi) &= E_{s_t \sim D} \left[ \frac{1}{2} (V_\psi(s_t) - E_{a_t \sim \pi_\phi}[Q_\theta(s_t,a_t)-\log \pi_\theta (a_t|s_t)])^2 \right]\\
 \hat{Q}(s_t,a_t) &=r(s_t,a_t) + \gamma E_{s_{t+1} \sim p} [V_{\overline{\psi}}(s_{t+1})]\\
-J_\pi(\psi) &= E_{s_t \sim D} \left[ D_{KL} \left( \pi_\phi (\cdot | s_t) \left\| \frac{\exp( Q_\theta(s_t, \cdot))}{Z_\theta(s_t)} \right. \right) \right] 
+J_\pi(\psi) &= E_{s_t \sim D} \left[ D_{KL} \left( \pi_\phi (\cdot | s_t) \left\| \frac{\exp( Q_\theta(s_t, \cdot))}{Z_\theta(s_t)} \right. \right) \right]
 \end{aligned}
 $$
 

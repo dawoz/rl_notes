@@ -1,4 +1,6 @@
-# Lezione 2 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
+
+# Lecture 2 - Deep Q-Learning
 
 Limitazioni dei metodi esatti:
 

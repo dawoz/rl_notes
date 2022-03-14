@@ -1,4 +1,6 @@
-# Lezione 3 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
+
+# Lecture 3 - Policy Gradients and Advantage Estimation
 
 Metodi alternativi a DQN per risolvere grandi MDP:
 
@@ -88,7 +90,7 @@ Osservazioni sulla formulazione corrente:
 
 - già usabile
 - unbiased ma molto rumorosa (alta varianza). Fix per uso reale:
-  - si introdurrà una baseline, si userà più struttura temporale e si introddurranno i concetti di _trust region_ e _natural gradient_
+  - si introdurrà una baseline, si userà più struttura temporale e si introddurranno i concetti di **trust region** e **natural gradient**
 
 Altra idea:
 

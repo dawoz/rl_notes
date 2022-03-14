@@ -1,6 +1,8 @@
-# Lezione 4 Pieter Abbeel - Deep Reinforcement Learning
+**[< Torna all'indice dei conenuti](../index.md)**
 
-Come rendere ancora migliore Policy Gradient. 
+# Lecture 4 - TRPO and PPO
+
+Come rendere ancora migliore Policy Gradient.
 
 ## Surrogate loss
 
@@ -9,7 +11,7 @@ Si modifica la funzione obiettivo per qualsiasi $\theta_{old}$ rispetto a dati o
 $$
 U(\theta) = E_{r \sim \theta_{old}} \left[ \frac{P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right]\\
 \\
- \qquad \text{così che } E_{r \sim \theta_{old}} \left[ \frac{P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right] = P(\tau|\theta_{old})\frac{P(\tau|\theta)}{P(\tau|\theta_{old})}R(\tau)= P(\tau|\theta)R(\tau) 
+ \qquad \text{così che } E_{r \sim \theta_{old}} \left[ \frac{P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right] = P(\tau|\theta_{old})\frac{P(\tau|\theta)}{P(\tau|\theta_{old})}R(\tau)= P(\tau|\theta)R(\tau)
 $$
 
 Calcolo del gradiente:
@@ -19,7 +21,7 @@ $$
 \nabla_\theta U(\theta) &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right]\\
 \nabla_\theta U(\theta) |_{\theta=\theta_{old}} &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau|\theta) |_{\theta=\theta_{old}}}{P(\tau|\theta_{old})} R(\tau)\right]\\
 &= E_{r \sim \theta_{old}} \left[ \nabla_\theta \log P(\tau|\theta) |_{\theta=\theta_{old}} R(\tau)\right]
-\end{aligned} 
+\end{aligned}
 $$
 
 ## Step-sizing and Trust Region Policy Optimization (TRPO)
@@ -60,7 +62,7 @@ Osservazioni:
 
 Algoritmo TRPO:
 
-![](img/trpo.png "")
+![TRPO](img/trpo.png "TRPO")
 
 Calcolo di KL:
 
@@ -70,14 +72,11 @@ Calcolo approssimato della Kullback-Leibler divergence (KL):
 
 $$
 \begin{aligned}
-KL(P(\tau ; \theta) \| P(\tau ; \theta + \delta \theta)) &= \sum_\tau P(\tau; \theta) \log \frac{P(\tau; \theta)}{P(\tau; \theta + \delta \theta)} & \text{(def. $KL$ $divergence$)}\\
+KL(P(\tau ; \theta) \| P(\tau ; \theta + \delta \theta)) &= \sum_\tau P(\tau; \theta) \log \frac{P(\tau; \theta)}{P(\tau; \theta + \delta \theta)} & \text{(def. KL-divergence)}\\
 
 &= \sum_\tau P(\tau; \theta) \log \frac{P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t|s_t) P(s_{t+1}|s_t,u_t)}{P(s_0) \prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t) P(s_{t+1}|s_t,u_t)} & \text{(def. $P(\tau ; \theta)$)}\\
-
 &= \sum_\tau P(\tau; \theta) \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} & \text{(sempl. dynamics)}\\
-
 &= \sum_\tau \underbrace{P(\tau; \theta)}_{\substack{\text{dynamics, ma si} \\ \text{può fare sampling}}} \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} \\
-
 & \approx \frac{1}{M} \sum_{(s,u) \text{ in $M$ roll-outs}} \log \frac{\pi_\theta(u|s)}{\pi_{\theta + \delta \theta}(u|s)} \\
 \end{aligned}
 $$
@@ -113,14 +112,13 @@ $$
 
 PPOv1:
 
-![](img/ppov1.png "")
+![PPOv1](img/ppov1.png "PPOv1")
 
 **Come semplificare ancora PPO?**
 
 - abbiamo ancora KL
 - possiamo trovare un modo per controllare la distanza tra le policy senza dover usare KL
 - clipped surrogate loss: inseriamo il clipping del reward direttamente nella surrogate loss
-
 
 $$
 r_t(\theta) \stackrel{def}{=} \frac{\pi_\theta (a_t | s_t)}{\pi_{\theta_{old}} (a_t | s_t)} \quad \Rightarrow \quad r(\theta_{old})=1
