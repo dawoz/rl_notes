@@ -82,7 +82,7 @@ Computazione di $V_t^\ast(s)$ :
 $$
 \left\lbrace
 \begin{aligned}
-& V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
+& V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\\\
 & V_k^\ast(s)= \max_a \sum_{s'} P(s'\vert s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
 \end{aligned}
 \right.
@@ -265,8 +265,8 @@ Calcolo del duale lagrangiano:
 
 $$
 \begin{aligned}
-& \max_{\pi(a)} \left\lbrace E[r(a)] + \beta H(\pi(a)) \left \vert  \ \sum_{a'} \pi(a')=1 \right. \right\rbrace\\
-& \max_{\pi(a)} \left\lbrace E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left \vert \sum_{a'} \pi(a')=1 \right. \right\rbrace \\
+& \max_{\pi(a)} \left\lbrace E[r(a)] + \beta H(\pi(a)) \left \vert  \ \sum_{a'} \pi(a')=1 \right. \right\rbrace\\\\
+& \max_{\pi(a)} \left\lbrace E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left \vert \sum_{a'} \pi(a')=1 \right. \right\rbrace \\\\
 & \max_{\pi(a)} \min_\lambda \mathcal{L}(\pi(a),\lambda)= E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1 \right)
 \end{aligned}
 $$
@@ -275,10 +275,10 @@ Calcolo del massimo di $\mathcal{L}$ rispetto a $\pi(a)$:
 
 $$
 \begin{aligned}
-& \frac{\partial}{\partial \pi(a)}\mathcal{L}(\pi(a),\lambda)=0\\
-& \frac{\partial}{\partial \pi(a)} \left(\sum_{a'} \pi(a')r(a') - \beta \sum_{a'} \pi(a')\log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1\right) \right)=0\\
-& r(a)- \beta \log \pi(a) - \beta + \lambda = 0\\
-& \beta \log \pi(a) = r(a) - \beta + \lambda\\
+& \frac{\partial}{\partial \pi(a)}\mathcal{L}(\pi(a),\lambda)=0\\\\
+& \frac{\partial}{\partial \pi(a)} \left(\sum_{a'} \pi(a')r(a') - \beta \sum_{a'} \pi(a')\log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1\right) \right)=0\\\\
+& r(a)- \beta \log \pi(a) - \beta + \lambda = 0\\\\
+& \beta \log \pi(a) = r(a) - \beta + \lambda\\\\
 & \pi(a) = \exp \left( \frac{1}{\beta}(r(a) - \beta + \lambda) \right)
 \end{aligned}
 $$
@@ -287,8 +287,8 @@ Calcolo del minimo di $\mathcal{L}$ rispetto a $\lambda$:
 
 $$
 \begin{aligned}
-& \frac{\partial}{\partial \lambda} \mathcal{L}(\pi(a), \lambda) = 0\\
-& \sum_a \pi(a) - 1= 0\\
+& \frac{\partial}{\partial \lambda} \mathcal{L}(\pi(a), \lambda) = 0\\\\
+& \sum_a \pi(a) - 1= 0\\\\
 \end{aligned}
 $$
 
@@ -309,9 +309,9 @@ Valore $V$ associato alla policy $\pi(a)$:
 
 $$
 \begin{aligned}
-V &= \sum_a \left[ \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right) r(a) \right] - \beta \sum_a \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right)  \log \left[ \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right)  \right ]\\
-&= \sum_a \frac{1}{Z} \exp \left( \frac{1}{\beta} r(a) \right) \underbrace{\left[ r(a) - \beta \log \left( \exp\left(\frac{1}{\beta}r(a)\right) \right)\right]}_0 - \beta \log \frac{1}{Z}\underbrace{ \sum_a \frac{1}{Z} \exp \left( \frac{1}{\beta}r(a) \right)}_1\\
-&= - \beta \log \frac{1}{Z}\\
+V &= \sum_a \left[ \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right) r(a) \right] - \beta \sum_a \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right)  \log \left[ \frac{1}{Z}\exp \left( \frac{1}{\beta}r(a) \right)  \right ]\\\\
+&= \sum_a \frac{1}{Z} \exp \left( \frac{1}{\beta} r(a) \right) \underbrace{\left[ r(a) - \beta \log \left( \exp\left(\frac{1}{\beta}r(a)\right) \right)\right]}_0 - \beta \log \frac{1}{Z}\underbrace{ \sum_a \frac{1}{Z} \exp \left( \frac{1}{\beta}r(a) \right)}_1\\\\
+&= - \beta \log \frac{1}{Z}\\\\
 &= \beta \log \sum_a \exp \left( \frac{1}{\beta}r(a) \right) \equiv \text{softmax}
 \end{aligned}
 $$
@@ -324,8 +324,8 @@ $$
 
 $$
 \begin{aligned}
-V_k(s)&=\max_\pi E \left[ r(s,a,s') + \beta H(\pi(a\vert s)) + V_{k-1}(s') \right]\\
-&=\max_\pi E \left[ Q_k(s,a) + \beta H(\pi(a\vert s)) \right]\\
+V_k(s)&=\max_\pi E \left[ r(s,a,s') + \beta H(\pi(a\vert s)) + V_{k-1}(s') \right]\\\\
+&=\max_\pi E \left[ Q_k(s,a) + \beta H(\pi(a\vert s)) \right]\\\\
 \end{aligned}
 $$
 
