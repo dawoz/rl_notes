@@ -80,7 +80,7 @@ Esempio $\gamma=0.9$, $H=100$ e **probabilità di successo delle azioni pari a**
 Computazione di $V_t^\ast(s)$ :
 
 $$
-\left\{
+\left\lbrace
 \begin{aligned}
 & V_0^\ast(s)=0 \qquad \forall s \vphantom{\sum^k_b} \\
 & V_k^\ast(s)= \max_a \sum_{s'} P(s'\vert s,a)\cdot  ( R(s,a,s') + \gamma V_{k-1}^\ast(s')) \qquad k > 0 \phantom{\sum^k}
@@ -265,8 +265,8 @@ Calcolo del duale lagrangiano:
 
 $$
 \begin{aligned}
-& \max_{\pi(a)} \left\{ E[r(a)] + \beta H(\pi(a)) \left \vert  \ \sum_{a'} \pi(a')=1 \right. \right\}\\
-& \max_{\pi(a)} \left\{ E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left \vert \sum_{a'} \pi(a')=1 \right. \right\} \\
+& \max_{\pi(a)} \left\lbrace E[r(a)] + \beta H(\pi(a)) \left \vert  \ \sum_{a'} \pi(a')=1 \right. \right\rbrace\\
+& \max_{\pi(a)} \left\lbrace E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') \left \vert \sum_{a'} \pi(a')=1 \right. \right\rbrace \\
 & \max_{\pi(a)} \min_\lambda \mathcal{L}(\pi(a),\lambda)= E[r(a)] - \beta \sum_{a'} \pi(a') \log \pi(a') + \lambda \left( \sum_{a'} \pi(a')-1 \right)
 \end{aligned}
 $$
