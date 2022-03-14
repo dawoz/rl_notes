@@ -19,10 +19,7 @@
     startup: {
     ready: () => {
       MathJax.startup.defaultReady();
-      var elems = document.getElementsByClassName('math')
-      for (var i = 0; i < elems.length; i++) {
-        document.body.innerHTML = document.body.innerHTML.replace(/<em>/g,"_").replace(/<\/em>/g,"_")
-      }
+      document.body.innerHTML = document.body.innerHTML.replace(/<em>/g,"_").replace(/<\/em>/g,"_")
     }
   },
     options: {
