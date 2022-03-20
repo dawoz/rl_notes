@@ -37,13 +37,13 @@ Soft policy iteration:
 1) **soft policy evaluation**: fissando la policy, si fa un Bellman backup fino alla convergenza a $Q^\pi \ \equiv$ passo di SGD per minimizzare il Bellman residual
 
 $$
-Q(s,a) = r(s,a) + E_{s' \sim p_s, a' \sim \pi}[Q(s',a') \underbrace{- \log \pi(a'|s')}_{\text{entropy term}}]
+Q(s,a) = r(s,a) + E_{s' \sim p_s, a' \sim \pi}[Q(s',a') \underbrace{- \log \pi(a'\vert s')}_{\text{entropy term}}]
 $$
 
 2) **soft policy improvement**: aggiorna la policy tramite proiezione di informazione. Si avrà $Q^{\pi_{new}} \ge Q^{\pi_{old}} \ \equiv$ passo di SGD per minimizzare la KL-divergence
 
 $$
-\pi_{new} = \arg \min_{\pi'} D_{KL} \left( \pi'(\cdot | s) \left\| \frac{1}{Z} \exp Q^{\pi_{old}} (s, \cdot )\right. \right)
+\pi_{new} = \arg \min_{\pi'} D_{KL} \left( \pi'(\cdot \vert s) \left\Vert \frac{1}{Z} \exp Q^{\pi_{old}} (s, \cdot )\right. \right)
 $$
 
 3) **esegui un'azione** nell'ambiente e ripeti
@@ -51,16 +51,16 @@ $$
 Funzione obiettivo:
 
 $$
-J(\pi)=\sum_{t=0}^T E_{(s_t,a_t) \sim \rho_\pi} [ r(s_t, a_t) + \alpha H(\pi(\cdot | s_t))]
+J(\pi)=\sum_{t=0}^T E_{(s_t,a_t) \sim \rho_\pi} [ r(s_t, a_t) + \alpha H(\pi(\cdot \vert s_t))]
 $$
 
 Equazioni di update di V-value, Q-value, policy $\pi$:
 
 $$
 \begin{aligned}
-J_V(\psi) &= E_{s_t \sim D} \left[ \frac{1}{2} (V_\psi(s_t) - E_{a_t \sim \pi_\phi}[Q_\theta(s_t,a_t)-\log \pi_\theta (a_t|s_t)])^2 \right]\\
+J_V(\psi) &= E_{s_t \sim D} \left[ \frac{1}{2} (V_\psi(s_t) - E_{a_t \sim \pi_\phi}[Q_\theta(s_t,a_t)-\log \pi_\theta (a_t\vert s_t)])^2 \right]\\
 \hat{Q}(s_t,a_t) &=r(s_t,a_t) + \gamma E_{s_{t+1} \sim p} [V_{\overline{\psi}}(s_{t+1})]\\
-J_\pi(\psi) &= E_{s_t \sim D} \left[ D_{KL} \left( \pi_\phi (\cdot | s_t) \left\| \frac{\exp( Q_\theta(s_t, \cdot))}{Z_\theta(s_t)} \right. \right) \right]
+J_\pi(\psi) &= E_{s_t \sim D} \left[ D_{KL} \left( \pi_\phi (\cdot \vert s_t) \left\Vert \frac{\exp( Q_\theta(s_t, \cdot))}{Z_\theta(s_t)} \right. \right) \right]
 \end{aligned}
 $$
 

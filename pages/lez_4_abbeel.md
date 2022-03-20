@@ -9,18 +9,18 @@ Come rendere ancora migliore Policy Gradient.
 Si modifica la funzione obiettivo per qualsiasi $\theta_{old}$ rispetto a dati ottenuti fin'ora. Se utilizziamo $\theta=\theta_{old}$ abbiamo un meccanismo standard policy gradient.
 
 $$
-U(\theta) = E_{r \sim \theta_{old}} \left[ \frac{P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right]\\
+U(\theta) = E_{r \sim \theta_{old}} \left[ \frac{P(\tau\vert \theta)}{P(\tau\vert \theta_{old})} R(\tau)\right]\\
 \\
- \qquad \text{così che } E_{r \sim \theta_{old}} \left[ \frac{P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right] = P(\tau|\theta_{old})\frac{P(\tau|\theta)}{P(\tau|\theta_{old})}R(\tau)= P(\tau|\theta)R(\tau)
+ \qquad \text{così che } E_{r \sim \theta_{old}} \left[ \frac{P(\tau\vert \theta)}{P(\tau\vert \theta_{old})} R(\tau)\right] = P(\tau\vert \theta_{old})\frac{P(\tau\vert \theta)}{P(\tau\vert \theta_{old})}R(\tau)= P(\tau\vert \theta)R(\tau)
 $$
 
 Calcolo del gradiente:
 
 $$
 \begin{aligned}
-\nabla_\theta U(\theta) &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau|\theta)}{P(\tau|\theta_{old})} R(\tau)\right]\\
-\nabla_\theta U(\theta) |_{\theta=\theta_{old}} &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau|\theta) |_{\theta=\theta_{old}}}{P(\tau|\theta_{old})} R(\tau)\right]\\
-&= E_{r \sim \theta_{old}} \left[ \nabla_\theta \log P(\tau|\theta) |_{\theta=\theta_{old}} R(\tau)\right]
+\nabla_\theta U(\theta) &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau\vert \theta)}{P(\tau\vert \theta_{old})} R(\tau)\right]\\
+\nabla_\theta U(\theta) \vert _{\theta=\theta_{old}} &= E_{r \sim \theta_{old}} \left[ \frac{\nabla_\theta P(\tau\vert \theta) \vert _{\theta=\theta_{old}}}{P(\tau\vert \theta_{old})} R(\tau)\right]\\
+&= E_{r \sim \theta_{old}} \left[ \nabla_\theta \log P(\tau\vert \theta) \vert _{\theta=\theta_{old}} R(\tau)\right]
 \end{aligned}
 $$
 
@@ -45,8 +45,8 @@ Step-sizing con ricerca lineare nella direzione del gradiente:
 
 $$
 \begin{aligned}
-\max_\pi \ & L(\pi) = E_{\pi_{old}} \left[ \frac{\pi(a|s)}{\pi_{old}(a|s)} A^{\pi_{old}}(s,a) \right]\\
-\text{s.t.} \ & E_{\pi_{old}}[KL(\pi \| \pi_{old})] < \epsilon
+\max_\pi \ & L(\pi) = E_{\pi_{old}} \left[ \frac{\pi(a\vert s)}{\pi_{old}(a\vert s)} A^{\pi_{old}}(s,a) \right]\\
+\text{s.t.} \ & E_{\pi_{old}}[KL(\pi \Vert \pi_{old})] < \epsilon
 \end{aligned}
 $$
 
@@ -57,7 +57,7 @@ Osservazioni:
 - la loss function valuta la nuova policy senza collezionare altri dati
 - stima $A^{\pi_{old}}$ dipende dalla old policy
 - il metodo è buono quando la nuova policy è vicino alla vecchia policy
-- $KL(\pi \| \pi_{old})$ distanza delle policy sotto forma di **Kullback-Leibler divergence** (calcolo di quanto due distribuzioni di probabilità differiscono tra di loro): si può usare il metodo del gradiente coniugato per calcolarla, siccome è di ordine superiore
+- $KL(\pi \Vert \pi_{old})$ distanza delle policy sotto forma di **Kullback-Leibler divergence** (calcolo di quanto due distribuzioni di probabilità differiscono tra di loro): si può usare il metodo del gradiente coniugato per calcolarla, siccome è di ordine superiore
 - regione KL: ancora da definire
 
 Algoritmo TRPO:
@@ -66,17 +66,17 @@ Algoritmo TRPO:
 
 Calcolo di KL:
 
-Recall calcolo probabilità traiettoria: $P(\tau ; \theta) = P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t|s_t) P(s_{t+1}|s_t,u_t)$
+Recall calcolo probabilità traiettoria: $P(\tau ; \theta) = P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t\vert s_t) P(s_{t+1}\vert s_t,u_t)$
 
 Calcolo approssimato della Kullback-Leibler divergence (KL):
 
 $$
 \begin{aligned}
-KL(P(\tau ; \theta) \| P(\tau ; \theta + \delta \theta)) &= \sum_\tau P(\tau; \theta) \log \frac{P(\tau; \theta)}{P(\tau; \theta + \delta \theta)} & \text{(def. KL-divergence)}\\
-&= \sum_\tau P(\tau; \theta) \log \frac{P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t|s_t) P(s_{t+1}|s_t,u_t)}{P(s_0) \prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t) P(s_{t+1}|s_t,u_t)} & \text{(def. }P(\tau ; \theta))\\
-&= \sum_\tau P(\tau; \theta) \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} & \text{(sempl. dynamics)}\\
-&= \sum_\tau \underbrace{P(\tau; \theta)}_{\substack{\text{dynamics, ma si} \\ \text{può fare sampling}}} \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t|s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t|s_t)} \\
-& \approx \frac{1}{M} \sum_{(s,u) \text{ in M roll-outs}} \log \frac{\pi_\theta(u|s)}{\pi_{\theta + \delta \theta}(u|s)} \\
+KL(P(\tau ; \theta) \Vert P(\tau ; \theta + \delta \theta)) &= \sum_\tau P(\tau; \theta) \log \frac{P(\tau; \theta)}{P(\tau; \theta + \delta \theta)} & \text{(def. KL-divergence)}\\
+&= \sum_\tau P(\tau; \theta) \log \frac{P(s_0) \prod_{t=0}^{H-1} \pi_\theta(u_t\vert s_t) P(s_{t+1}\vert s_t,u_t)}{P(s_0) \prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t\vert s_t) P(s_{t+1}\vert s_t,u_t)} & \text{(def. }P(\tau ; \theta))\\
+&= \sum_\tau P(\tau; \theta) \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t\vert s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t\vert s_t)} & \text{(sempl. dynamics)}\\
+&= \sum_\tau \underbrace{P(\tau; \theta)}_{\substack{\text{dynamics, ma si} \\ \text{può fare sampling}}} \log \frac{\prod_{t=0}^{H-1} \pi_\theta(u_t\vert s_t)}{\prod_{t=0}^{H-1} \pi_{\theta + \delta \theta}(u_t\vert s_t)} \\
+& \approx \frac{1}{M} \sum_{(s,u) \text{ in M roll-outs}} \log \frac{\pi_\theta(u\vert s)}{\pi_{\theta + \delta \theta}(u\vert s)} \\
 \end{aligned}
 $$
 
@@ -98,14 +98,14 @@ Idea PPO:
 
 $$
 \begin{aligned}
-\max_\theta \ & \hat{E}_t \left[ \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} \hat{A}_t \right] & \qquad (TRPO)\\
-\text{s.t.} \ & \hat{E}_t [KL(\pi(\cdot | s_t), \pi_{old}(\cdot | s_t))] < \delta
+\max_\theta \ & \hat{E}_t \left[ \frac{\pi_\theta(a_t\vert s_t)}{\pi_{\theta_{old}}(a_t\vert s_t)} \hat{A}_t \right] & \qquad (TRPO)\\
+\text{s.t.} \ & \hat{E}_t [KL(\pi(\cdot \vert s_t), \pi_{old}(\cdot \vert s_t))] < \delta
 \end{aligned}
 $$
 
 $$
 \begin{aligned}
-\max_\theta \ & \hat{E}_t \left[ \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} \hat{A}_t \right] - \beta \left( \hat{E}_t [KL(\pi(\cdot | s_t), \pi_{old}(\cdot | s_t))] < \delta \right) & \qquad (PPO)\\
+\max_\theta \ & \hat{E}_t \left[ \frac{\pi_\theta(a_t\vert s_t)}{\pi_{\theta_{old}}(a_t\vert s_t)} \hat{A}_t \right] - \beta \left( \hat{E}_t [KL(\pi(\cdot \vert s_t), \pi_{old}(\cdot \vert s_t))] < \delta \right) & \qquad (PPO)\\
 \end{aligned}
 $$
 
@@ -120,7 +120,7 @@ PPOv1:
 - clipped surrogate loss: inseriamo il clipping del reward direttamente nella surrogate loss
 
 $$
-r_t(\theta) \stackrel{def}{=} \frac{\pi_\theta (a_t | s_t)}{\pi_{\theta_{old}} (a_t | s_t)} \quad \Rightarrow \quad r(\theta_{old})=1
+r_t(\theta) \stackrel{def}{=} \frac{\pi_\theta (a_t \vert s_t)}{\pi_{\theta_{old}} (a_t \vert s_t)} \quad \Rightarrow \quad r(\theta_{old})=1
 $$
 
 Nuova funzione obietivo (**PPOv2**):

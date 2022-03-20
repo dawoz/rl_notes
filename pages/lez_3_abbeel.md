@@ -13,8 +13,8 @@ Metodi alternativi a DQN per risolvere grandi MDP:
 
 - in Policy Gradient Methods l'agente è una rete neurale
 - sceglie l'azione in base a stati e reward, e i pesi $\theta$
-- la rete operererà l'ottimizzazione $\max_\theta E\left[ \left. \sum_{t=0}^H R(s_t) \right| \pi_\theta \right]$
-- spesso si preferiscono policy stocastiche $\pi_\theta(u|s)$, in modo da avere una pianificazione più smooth
+- la rete operererà l'ottimizzazione $\max_\theta E\left[ \left. \sum_{t=0}^H R(s_t) \right\vert \pi_\theta \right]$
+- spesso si preferiscono policy stocastiche $\pi_\theta(u\vert s)$, in modo da avere una pianificazione più smooth
 - la stocasticità aiuta l'agente a esplorare il mondo
 - la rete restituisce una distribuzione sulle azioni
 
@@ -68,10 +68,10 @@ Decomposizione su traiettorie non complete: analisi locale.
 
 $$
 \begin{aligned}
-\nabla_\theta \log P(\tau^{(i)}; \theta)&= \nabla_\theta \log \left ( \prod_{t=0}^H P\left(s_{t+1}^{(i)} \left| s_{t}^{(i)}, u_{t}^{(i)} \right.\right) \cdot \pi_\theta \left(u_{t}^{(i)}\left|s_{t}^{(i)}\right.\right) \right) & \text{(decomposizione $\tau$)}\\
-&= \nabla_\theta \left ( \sum_{t=0}^H \log P\left(s_{t+1}^{(i)} \left| s_{t}^{(i)}, u_{t}^{(i)} \right.\right) + \sum_{t=0}^H \log \pi_\theta \left(u_{t}^{(i)}\left|s_{t}^{(i)}\right.\right) \right) & \text{(prop. $\log$)}\\
-&= \nabla_\theta \sum_{t=0}^H \log \pi_\theta \left(u_{t}^{(i)}\left|s_{t}^{(i)}\right.\right) & \text{(dynamic model non dipende da $\theta$)}\\
-&= \sum_{t=0}^H \nabla_\theta  \log \pi_\theta \left(u_{t}^{(i)}\left|s_{t}^{(i)}\right.\right) \\
+\nabla_\theta \log P(\tau^{(i)}; \theta)&= \nabla_\theta \log \left ( \prod_{t=0}^H P\left(s_{t+1}^{(i)} \left\vert  s_{t}^{(i)}, u_{t}^{(i)} \right.\right) \cdot \pi_\theta \left(u_{t}^{(i)}\left\vert s_{t}^{(i)}\right.\right) \right) & \text{(decomposizione $\tau$)}\\
+&= \nabla_\theta \left ( \sum_{t=0}^H \log P\left(s_{t+1}^{(i)} \left\vert  s_{t}^{(i)}, u_{t}^{(i)} \right.\right) + \sum_{t=0}^H \log \pi_\theta \left(u_{t}^{(i)}\left\vert s_{t}^{(i)}\right.\right) \right) & \text{(prop. $\log$)}\\
+&= \nabla_\theta \sum_{t=0}^H \log \pi_\theta \left(u_{t}^{(i)}\left\vert s_{t}^{(i)}\right.\right) & \text{(dynamic model non dipende da $\theta$)}\\
+&= \sum_{t=0}^H \nabla_\theta  \log \pi_\theta \left(u_{t}^{(i)}\left\vert s_{t}^{(i)}\right.\right) \\
 \end{aligned}
 $$
 
@@ -83,7 +83,7 @@ Osservazione:
 Unbiased estimate del gradiente implica $E[\hat{g}]=\nabla_\theta U(\theta)$:
 
 $$
-\hat{g} = \frac{1}{m} \sum_{i=0}^m \nabla_\theta \log P(\tau^{(i)}; \theta) R(\tau^{(i)}), \qquad \text{con} \quad \nabla_\theta \log P(\tau^{(i)}; \theta) = \sum_{t=0}^H \nabla_\theta  \log \pi_\theta \left(u_{t}^{(i)}\left|s_{t}^{(i)}\right.\right)
+\hat{g} = \frac{1}{m} \sum_{i=0}^m \nabla_\theta \log P(\tau^{(i)}; \theta) R(\tau^{(i)}), \qquad \text{con} \quad \nabla_\theta \log P(\tau^{(i)}; \theta) = \sum_{t=0}^H \nabla_\theta  \log \pi_\theta \left(u_{t}^{(i)}\left\vert s_{t}^{(i)}\right.\right)
 $$
 
 Osservazioni sulla formulazione corrente:
@@ -125,8 +125,8 @@ Decomposizione temporale del reward:
 $$
 \begin{aligned}
 \hat{g} &= \frac{1}{m} \sum_{i=0}^m \nabla_\theta \log P(\tau^{(i)}; \theta) R(\tau^{(i)}-b)\\
-&= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)})\right) \left( \sum_{t=0}^{H-1} R(s_t^{(i)}, u_t^{(i)}) - b\right)\\
-&= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)})\right) \left( \underbrace{\sum_{k=0}^{t-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni passate}} +  \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni future}} - b\right)\\
+&= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}\vert  s_t^{(i)})\right) \left( \sum_{t=0}^{H-1} R(s_t^{(i)}, u_t^{(i)}) - b\right)\\
+&= \frac{1}{m} \sum_{i=0}^m \left( \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}\vert  s_t^{(i)})\right) \left( \underbrace{\sum_{k=0}^{t-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni passate}} +  \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{azioni future}} - b\right)\\
 \end{aligned}
 $$
 
@@ -139,7 +139,7 @@ Osservazioni:
 Si rimuovono termini non dipendenti, in modo da ridurre la varianza, e si ottiene l'equazione usata nella pratica:
 
 $$
-\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)}) \left( \sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})- b(s_t^{(i)})\right)\\
+\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}\vert  s_t^{(i)}) \left( \sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})- b(s_t^{(i)})\right)\\
 $$
 
 Quindi si aumenta la probabilità di azioni che permettono di accumulare un reward futuro alto rispetto alla baseline.
@@ -174,7 +174,7 @@ $$
 Bisogna stimare la funzione V, per evitare il calcolo esatto.
 
 $$
-\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)}) \left( \sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})- V^\pi (s_t^{(i)})\right)\\
+\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}\vert  s_t^{(i)}) \left( \sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})- V^\pi (s_t^{(i)})\right)\\
 $$
 
 ### 1) Monte Carlo estimation di $V^\pi$
@@ -200,7 +200,7 @@ Training neurale della V-value function usando l'equazione di Bellman update:
 - passo di fitting:
 
 $$
-\phi_{i+1} = \min_\phi \sum_{(s,u,s',r)} \| r+V_{\phi_i}^\pi(s') - V_\phi(s)\|_2^2 + \lambda\| \phi - \phi_i \|_2^2
+\phi_{i+1} = \min_\phi \sum_{(s,u,s',r)} \Vert   r+V_{\phi_i}^\pi(s') - V_\phi(s)\Vert  _2^2 + \lambda\Vert   \phi - \phi_i \Vert  _2^2
 $$
 
 Si esegue anche regolarizzazione per evitare update troppo grandi. Si può anche fare update in batch.
@@ -218,10 +218,10 @@ Per la baseline, a volte si parte con Monte Carlo, e poi da una certa iterazione
 Vogliamo raffinare la stima del reward futuro, non più un singolo esempio ma una stima con varianza sperabilmente minore.
 
 $$
-\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}| s_t^{(i)}) \left( \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{stima di }Q^\pi} - V^\pi (s_t^{(i)})\right)\\
+\hat{g}= \frac{1}{m} \sum_{i=0}^m  \sum_{t=0}^{H-1}\nabla_\theta \log \pi_\theta(u_t^{(i)}\vert  s_t^{(i)}) \left( \underbrace{\sum_{k=t}^{H-1} R(s_k^{(i)}, u_k^{(i)})}_{\text{stima di }Q^\pi} - V^\pi (s_t^{(i)})\right)\\
 $$
 
-Stima di $Q^\pi(s,u)=E\left[ \left. \sum_{t=0}^H r_t \right| s_0=s, a_0=u\right]$: alta varianza per sample, nessuna generalizzazione.
+Stima di $Q^\pi(s,u)=E\left[ \left. \sum_{t=0}^H r_t \right\vert  s_0=s, a_0=u\right]$: alta varianza per sample, nessuna generalizzazione.
 
 Riduzione della varianza:
 
@@ -234,9 +234,9 @@ Stima del Q-value $\hat{Q}:$
 
 $$
 \begin{aligned}
-& Q^\pi(s,u)=E\left[ \left. \sum_{t=0}^H \gamma^tr_t \right| s_0=s, a_0=u\right] & \text{(zero bias, alta varianza)}\\
-& Q^\pi(s,u)=E\left[ \left. r_0 + \gamma V^\pi(s_1)\right| s_0=s, a_0=u\right] & \text{(alto bias, bassa varianza)}\\
-& Q^\pi(s,u)=E\left[ \left. \left( \sum_{t=0}^{k-1} \gamma^tr_t \right) + \gamma^k V^\pi(s_k) \right| s_0=s, a_0=u\right] & \text{(tradeoff)}\\
+& Q^\pi(s,u)=E\left[ \left. \sum_{t=0}^H \gamma^tr_t \right\vert  s_0=s, a_0=u\right] & \text{(zero bias, alta varianza)}\\
+& Q^\pi(s,u)=E\left[ \left. r_0 + \gamma V^\pi(s_1)\right\vert  s_0=s, a_0=u\right] & \text{(alto bias, bassa varianza)}\\
+& Q^\pi(s,u)=E\left[ \left. \left( \sum_{t=0}^{k-1} \gamma^tr_t \right) + \gamma^k V^\pi(s_k) \right\vert  s_0=s, a_0=u\right] & \text{(tradeoff)}\\
 \end{aligned}
 $$
 
