@@ -14,3 +14,7 @@
 - [Intro to Policy Optimization](pages/spinup_1_intro_po.md)
 - [Trust Region Policy Optimization](pages/spinup_2_trpo.md)
 - [Proximal Policy Optimization](pages/spinup_3_ppo.md)
+
+### Miscellaneous
+
+- [Note](pages/notes.md)
