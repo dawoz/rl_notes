@@ -3,4 +3,4 @@ title: Appunti di Reinforcement Learning
 #description: 
 kramdown:
   # math_engine: katex
-  input: markdown
+  # input: markdown
