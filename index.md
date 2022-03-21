@@ -11,7 +11,7 @@
 
 ### [Open AI Spinning Up 🔗](https://spinningup.openai.com/en/latest)
 
-- [Intro to Policy Optimization](pages/spinup_1_intro_po.md)
+- [Intro to Policy Optimization e VPG](pages/spinup_1_intro_po.md)
 - [Trust Region Policy Optimization](pages/spinup_2_trpo.md)
 - [Proximal Policy Optimization](pages/spinup_3_ppo.md)
 

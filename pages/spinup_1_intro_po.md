@@ -223,3 +223,9 @@ Osservazioni:
 
 - la formulazione con $A^{\pi_\theta}(s_t,a_t)$ (approssimata) è molto comune
 - varie scelte di $\Phi_t$ sono investigate in **General Advantage Estimation**
+
+### Vanilla Policy Gradient (VPG)
+
+Forma di VGP con advantage function
+
+![VPG Spinning Up](img/vpg_spinup.svg "VPG Spinning Up")
