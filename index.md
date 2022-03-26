@@ -18,3 +18,17 @@
 ### Miscellaneous
 
 - [Note](pages/notes.md)
+
+---
+
+### Link utili
+
+- [Generalized Advantage Estimate: Maths and Code](https://towardsdatascience.com/generalized-advantage-estimate-maths-and-code-b5d5bd3ce737)
+- [RL — Trust Region Policy Optimization (TRPO) Explained](https://jonathan-hui.medium.com/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9)
+- [RL — Trust Region Policy Optimization (TRPO) Part 2](https://jonathan-hui.medium.com/rl-trust-region-policy-optimization-trpo-part-2-f51e3b2e373a)
+
+### Implementazioni
+
+- [Baselines](https://github.com/openai/baselines)
+- [Stable Baselines](https://github.com/Stable-Baselines-Team/stable-baselines)
+- [Acme](https://github.com/deepmind/acme)
